@@ -1,29 +1,57 @@
 const sequelize = require("../config/sequelize");
 const { DataTypes } = require("sequelize");
 
-const products = sequelize.define("products", {
+const Products = sequelize.define("Products", {
     id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true
     },
     name: {
-        type: DataTypes.STRING,
+        type:DataTypes.STRING,
         allowNull: false
     },
     price: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false
     },
+    original_price: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: true
+    },
     category_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
+        allowNull: false,
         references: {
-            model: 'categories',
-            key: 'id'
+            model: "Categories",
+            key: "id"
         }
+    },
+    is_new: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+    },
+    description: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+    specfications: {
+        type: DataTypes.JSON,
+        allowNull: true
+    },
+    shipping: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    warranty: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    return: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
-}, {
-    timestamps: false
 })
 
-module.exports = products;
+module.exports = Products;
